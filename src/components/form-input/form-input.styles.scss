@@ -9,20 +9,21 @@ $main-color: black;
 
 .group {
   position: relative;
-  margin: 45px 0;
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.24);
+  margin-bottom: 27px;
 
   .form-input {
-    background: none;
-    background-color: white;
-    color: $sub-color;
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
+    height: 45px;
     display: block;
     width: 100%;
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid $sub-color;
-    margin: 25px 0;
+    background: transparent;
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #ffffff !important;
+    line-height: 1.2;
+    padding: 0 5px;
 
     &:focus {
       outline: none;

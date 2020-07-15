@@ -1,0 +1,58 @@
+.wrap-form {
+    width: 500px;
+    background: #80c64a;
+    background: -webkit-linear-gradient(45deg, #372fab, #6b63e0);
+    background: -o-linear-gradient(45deg, #372fab, #6b63e0);
+    background: -moz-linear-gradient(45deg, #372fab, #6b63e0);
+    background: linear-gradient(45deg, #372fab, #6b63e0);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 72px 55px 65px 55px;
+}
+
+.wrap-top-btn{
+    margin: auto 0;
+}
+
+form {
+    width: 100%;
+}
+
+.formButton {
+    font-family: Poppins-Medium;
+    font-size: 16px;
+    color: #555555;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    min-width: 120px;
+    height: 50px;
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+}
+
+.formButton:hover {
+    color: #fff;
+    background: #325deb;
+    background: -webkit-linear-gradient(-135deg, #2f50ab, #6376e0);
+    background: -o-linear-gradient(-135deg, #2f50ab, #6376e0);
+    background: -moz-linear-gradient(-135deg, #2f50ab, #6376e0);
+    background: linear-gradient(-135deg, #2f50ab, #6376e0);
+}
+
+.formButton:hover {
+    cursor: pointer;
+}
