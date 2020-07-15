@@ -3,7 +3,7 @@ import { database } from '../../firebase/firebase.utils';
 
 export function getClients() {
   return dispatch => {
-      database.ref("/clients").on(
+      database.ref("clients").on(
           'value',
           snapshot => {
               dispatch({
