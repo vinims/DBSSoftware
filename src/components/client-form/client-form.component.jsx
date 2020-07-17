@@ -75,17 +75,25 @@ class ClientForm extends React.Component {
             return value;
         }));
 
-    mountingColumns = (obj) => _.values(_.mapValues(obj, (value, key) => { value.id = key; return value; }));
+    mountingColumns = (obj) => _.keys(
+        _.mapKeys(obj, (value, key) => {
+            value.title = `'` + key + `'`;
+            value.dataIndex = `'` + key + `'`;
+            value.key = `'` + key + `'`;
+            console.log(value);
+            return value
+        }));
 
     componentWillReceiveProps(nextProps) {
+        
         if (this.props.clients !== nextProps.clients) {
-
             this.setState({
                 rows: this.toArrayWithKey(nextProps.clients),
             });
+            let test = this.mountingColumns(this.state.rows)
+            console.log(test);
+
         }
-        console.log(nextProps.clients);
-        console.log(this.state.rows);
     }
 
     // handle change
@@ -176,7 +184,7 @@ class ClientForm extends React.Component {
                                     name='class'
                                     type='text'
                                     handleChange={this.handleChange}
-                                    value={this.state.name}
+                                    value={this.state.class}
                                     label='class'
                                     required
                                 />
