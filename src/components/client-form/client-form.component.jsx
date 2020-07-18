@@ -20,24 +20,7 @@ class ClientForm extends React.Component {
             name: '',
             class: '',
             formUpdating: false,
-            columns: [
-                {
-                    title: 'Name',
-                    dataIndex: 'name',
-                    key: 'name',
-                    render: text => <a>{text}</a>,
-                },
-                {
-                    title: 'Class',
-                    dataIndex: 'class',
-                    key: 'class',
-                },
-                {
-                    title: 'Edit',
-                    dataIndex: 'btns',
-                    key: 'btns',
-                },
-            ],
+            columns: [],
             rows: [],
         };
 
@@ -75,25 +58,31 @@ class ClientForm extends React.Component {
             return value;
         }));
 
-    mountingColumns = (obj) => _.keys(
-        _.mapKeys(obj, (value, key) => {
-            value.title = `'` + key + `'`;
-            value.dataIndex = `'` + key + `'`;
-            value.key = `'` + key + `'`;
-            console.log(value);
-            return value
-        }));
+    mountingColumns = (obj) => _.keys(obj);
 
     componentWillReceiveProps(nextProps) {
-        
         if (this.props.clients !== nextProps.clients) {
-            this.setState({
-                rows: this.toArrayWithKey(nextProps.clients),
-            });
-            let test = this.mountingColumns(this.state.rows)
-            console.log(test);
-
+            let arrayForRows = this.toArrayWithKey(nextProps.clients)
+        if (arrayForRows = this.toArrayWithKey(nextProps.clients)) {
+            let arrayForCols = this.mountingColumns(arrayForRows[0]);
+            console.log(arrayForCols);
+            let cols = [];
+            for (var i = 0; i < arrayForCols.length; i++) {
+                cols.push(
+                    {
+                        title: arrayForCols[i],
+                        dataIndex: arrayForCols[i],
+                        key: arrayForCols[i],
+                    },
+                )
+              }
+              console.log(cols);
+              this.setState({
+                  columns: cols,
+                  rows: arrayForRows,
+              });
         }
+    }
     }
 
     // handle change
@@ -141,7 +130,6 @@ class ClientForm extends React.Component {
             name: itemForUpdate.name,
             class: itemForUpdate.class,
         });
-
         console.log(this.state.rows.find(element => element.id === id));
     }
 
@@ -149,7 +137,7 @@ class ClientForm extends React.Component {
     renderClientTable() {
         return (
             <div>
-                <Table columns={this.state.columns} dataSource={this.state.rows} key='name' shouldCellUpdate />
+                <Table columns={this.state.columns} dataSource={this.state.rows} />
             </div>
         );
     }
