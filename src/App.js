@@ -6,6 +6,7 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ClientsPage from './pages/clientspage/clientspage.component';
+import ClientPage from './pages/clientspage/clientspage.component';
 
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
@@ -39,6 +40,12 @@ class App extends React.Component {
     this.unsubscribeFromAuth();
   }
 
+  renderClients = (routerProps) => {
+    console.log(routerProps)
+    let clientId = routerProps.match.params.clientId
+    return <ClientPage client={clientId}/>
+  }
+
   render() {
     return (
       <div>
@@ -46,6 +53,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/clients' component={ClientsPage} />
+          <Route exact path="/client/:clientId" render = {routerProps => this.renderClients(routerProps)} />
           <Route
             exact
             path='/signin'
@@ -57,6 +65,7 @@ class App extends React.Component {
               )
             }
           />
+          <Route component = {HomePage} />
         </Switch>
       </div>
     );

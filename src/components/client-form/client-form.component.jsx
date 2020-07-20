@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -18,7 +19,8 @@ class ClientForm extends React.Component {
         this.state = {
             itemId: '',
             name: '',
-            class: '',
+            priority: '',
+            phone: '',
             formUpdating: false,
             columns: [],
             rows: [],
@@ -54,6 +56,7 @@ class ClientForm extends React.Component {
                 <div className="row">
                     <button onClick={() => this.updateItem(key)}>Update</button>
                     <button onClick={() => this.props.deleteClient(key)}>Delete</button>
+                    <Link to={`/client/${key}`}>View</Link>
                 </div>;
             return value;
         }));
@@ -65,7 +68,6 @@ class ClientForm extends React.Component {
             let arrayForRows = this.toArrayWithKey(nextProps.clients)
         if (arrayForRows = this.toArrayWithKey(nextProps.clients)) {
             let arrayForCols = this.mountingColumns(arrayForRows[0]);
-            console.log(arrayForCols);
             let cols = [];
             for (var i = 0; i < arrayForCols.length; i++) {
                 cols.push(
@@ -76,7 +78,6 @@ class ClientForm extends React.Component {
                     },
                 )
               }
-              console.log(cols);
               this.setState({
                   columns: cols,
                   rows: arrayForRows,
@@ -99,7 +100,8 @@ class ClientForm extends React.Component {
             e.preventDefault();
             const client = {
                 name: this.state.name,
-                class: this.state.class,
+                priority: this.state.priority,
+                phone: this.state.phone,
             };
             if (this.state.formUpdating === false) {
                 this.props.saveClient(client);
@@ -108,7 +110,8 @@ class ClientForm extends React.Component {
             }
             this.setState({
                 name: '',
-                class: '',
+                priority: '',
+                phone: '',
             });
         }
     }
@@ -118,7 +121,8 @@ class ClientForm extends React.Component {
             formUpdating: false,
             itemId: '',
             name: '',
-            class: '',
+            priority: '',
+            phone: '',
         });
     }
 
@@ -128,7 +132,8 @@ class ClientForm extends React.Component {
             formUpdating: true,
             itemId: itemForUpdate.id,
             name: itemForUpdate.name,
-            class: itemForUpdate.class,
+            priority: itemForUpdate.priority,
+            phone: itemForUpdate.phone,
         });
         console.log(this.state.rows.find(element => element.id === id));
     }
@@ -137,7 +142,7 @@ class ClientForm extends React.Component {
     renderClientTable() {
         return (
             <div>
-                <Table columns={this.state.columns} dataSource={this.state.rows} />
+                <Table key="id" columns={this.state.columns} dataSource={this.state.rows} />
             </div>
         );
     }
@@ -156,7 +161,7 @@ class ClientForm extends React.Component {
 </div>
                         <form className="form" onSubmit={this.handleSubmit(this.state.itemId)}>
 
-                            <div className="form-group wrap-input">
+                            <div className="form-group">
                                 <FormInput
                                     name='name'
                                     type='text'
@@ -167,13 +172,25 @@ class ClientForm extends React.Component {
                                 />
                             </div>
 
-                            <div className="wrap-input wrap-input">
+                            <div className="wrap-input">
                                 <FormInput
-                                    name='class'
-                                    type='text'
+                                    name='priority'
+                                    type='select'
                                     handleChange={this.handleChange}
-                                    value={this.state.class}
-                                    label='class'
+                                    value={this.state.priority}
+                                    label='priority'
+                                    options={["A", "B", "C"]}
+                                    required
+                                />
+                            </div>
+
+                            <div className="wrap-input">
+                                <FormInput
+                                    name='phone'
+                                    type='tel'
+                                    handleChange={this.handleChange}
+                                    value={this.state.phone}
+                                    label='Phone Number'
                                     required
                                 />
                             </div>
