@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { getClients, saveClient, deleteClient, editClient } from '../../redux/clients/client.actions';
+import { getClients, saveClient, deleteClient } from '../../redux/clients/client.actions';
 
 import { Table, Tag, Space } from 'antd';
 
@@ -18,6 +18,7 @@ class ClientForm extends React.Component {
 
         this.state = {
             itemId: '',
+            id: '',
             name: '',
             priority: '',
             phone: '',
@@ -51,11 +52,10 @@ class ClientForm extends React.Component {
 
     toArrayWithKey = (obj) => _.values(
         _.mapValues(obj, (value, key) => {
-            value.id = key;
             value.btns =
                 <div className="row">
-                    <button onClick={() => this.updateItem(key)}>Update</button>
-                    <button onClick={() => this.props.deleteClient(key)}>Delete</button>
+                    <button onClick={() => this.updateItem(value.id)}>Update</button>
+                    <button onClick={() => this.deleteItem(value.id) }>Delete</button>
                     <Link to={`/client/${key}`}>View</Link>
                 </div>;
             return value;
@@ -93,12 +93,14 @@ class ClientForm extends React.Component {
         this.setState({ [name]: value });
     };
 
+
     // handle submit
     handleSubmit(id) {
         return e => {
             console.log(e);
             e.preventDefault();
             const client = {
+                id: this.state.id,
                 name: this.state.name,
                 priority: this.state.priority,
                 phone: this.state.phone,
@@ -106,13 +108,14 @@ class ClientForm extends React.Component {
             if (this.state.formUpdating === false) {
                 this.props.saveClient(client);
             } else {
-                this.props.editClient(id, client);
+                this.props.saveClient(client);
             }
             this.setState({
                 name: '',
                 priority: '',
                 phone: '',
             });
+            this.props.getClients()
         }
     }
 
@@ -131,11 +134,17 @@ class ClientForm extends React.Component {
         this.setState({
             formUpdating: true,
             itemId: itemForUpdate.id,
+            id: itemForUpdate.id,
             name: itemForUpdate.name,
             priority: itemForUpdate.priority,
             phone: itemForUpdate.phone,
         });
         console.log(this.state.rows.find(element => element.id === id));
+    }
+
+    deleteItem = (id) => {
+        this.props.deleteClient(id);
+        this.props.getClients()
     }
 
     // render clients
@@ -160,6 +169,17 @@ class ClientForm extends React.Component {
                             )}
 </div>
                         <form className="form" onSubmit={this.handleSubmit(this.state.itemId)}>
+
+                        <div className="form-group">
+                                <FormInput
+                                    name='id'
+                                    type='text'
+                                    handleChange={this.handleChange}
+                                    value={this.state.id}
+                                    label='id'
+                                    required
+                                />
+                            </div>
 
                             <div className="form-group">
                                 <FormInput
@@ -223,4 +243,4 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-export default connect(mapStateToProps, { getClients, saveClient, deleteClient, editClient })(ClientForm);
+export default connect(mapStateToProps, { getClients, saveClient, deleteClient })(ClientForm);
