@@ -12,19 +12,35 @@ export function getClients() {
   };     
 }
 
+export function getClient(id) {
+  return async dispatch => {
+    const snapshot = await firestore.collection("clients").doc(id).get()
+     const data = snapshot.data();
+              dispatch({
+                  type: ClientActionTypes.GET_CLIENT,
+                  payload: data
+              });
+              return data;
+  };     
+}
+
 export const saveClient = (client, additionalData) => {
   return dispatch => {
   if (!client) return;
   const clientRef = firestore.collection("clients").doc(client.id);
-  const { id, name , priority , phone } = client;
+  const { id, name , priority , phone , imageFile , address , completeAddress , createdBy } = client;
     const createdAt = new Date();
     try {
       clientRef.set({
         id,
+        imageFile,
         name,
         priority,
         phone,
+        address,
+        completeAddress,
         createdAt,
+        createdBy,
         ...additionalData
       });
     } catch (error) {

@@ -17,6 +17,10 @@ code {
 input {
     outline: none;
     border: none;
+    position: relative;
+    width: 100%;
+    position: relative;
+    margin-bottom: 27px;
 }
 
 button {

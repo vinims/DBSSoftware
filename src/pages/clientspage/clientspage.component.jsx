@@ -1,10 +1,10 @@
 import React from 'react';
 
-import ClientForm from '../../components/client-form/client-form.component';
+import ClientsPageWrap from '../../components/clients-page-wrap/clients-page-wrap.component';
 
 const ClientsPage = () => {
     return (<div>
-        <ClientForm />
+        <ClientsPageWrap />
     </div>)
 }
 

@@ -22,10 +22,18 @@ const FormInput = ({ handleChange, label, type, options, ...otherProps }) => (
             </select>
           </div>
         )
-      } else {
+      } else if (type === "radio") {
         return (
           <div>
-            <input className='form-input' onChange={handleChange} {...otherProps} />
+            <input type={type} className='form-input' onChange={handleChange} {...otherProps} />
+
+          </div>
+        )
+      }
+       else {
+        return (
+          <div>
+            <input type={type} className='form-input' onChange={handleChange} {...otherProps} />
             {label ? (
               <label
                 className={`${

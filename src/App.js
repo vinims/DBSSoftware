@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
+import InitialConfigPage from './pages/initialconfigpage/initialconfigpage.component';
 import ClientsPage from './pages/clientspage/clientspage.component';
-import ClientPage from './pages/clientspage/clientspage.component';
+import ClientPage from './pages/clientspage/clientpage.component';
 
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
@@ -52,6 +53,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage} />
+          <Route exact path='/InitialConfigPage' component={InitialConfigPage} />
           <Route exact path='/clients' component={ClientsPage} />
           <Route exact path="/client/:clientId" render = {routerProps => this.renderClients(routerProps)} />
           <Route
