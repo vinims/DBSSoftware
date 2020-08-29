@@ -5,10 +5,24 @@ export function getContracts() {
   return async dispatch => {
     const snapshot = await firestore.collection("contracts").get()
     const docs = snapshot.docs.map(doc => doc.data());
+    console.log(docs)
               dispatch({
                   type: ContractActionTypes.GET_CONTRACTS,
                   payload: docs
               });
+  };     
+}
+
+export function getContract(id) {
+  console.log(id)
+  return async dispatch => {
+    const snapshot = await firestore.collection("contracts").doc(id).get()
+     const data = snapshot.data();
+              dispatch({
+                  type: ContractActionTypes.GET_CONTRACT,
+                  payload: data
+              });
+              return data;
   };     
 }
 

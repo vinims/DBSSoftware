@@ -8,6 +8,7 @@ import HomePage from './pages/homepage/homepage.component';
 import InitialConfigPage from './pages/initialconfigpage/initialconfigpage.component';
 import ClientsPage from './pages/clientspage/clientspage.component';
 import ClientPage from './pages/clientspage/clientpage.component';
+import ContractPage from './pages/contractspage/contractpage.component';
 
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
@@ -42,9 +43,13 @@ class App extends React.Component {
   }
 
   renderClients = (routerProps) => {
-    console.log(routerProps)
     let clientId = routerProps.match.params.clientId
     return <ClientPage client={clientId}/>
+  }
+
+  renderContracts = (routerProps) => {
+    let clientId = routerProps.match.params.clientId
+    return <ContractPage client={clientId}/>
   }
 
   render() {
@@ -56,6 +61,7 @@ class App extends React.Component {
           <Route exact path='/InitialConfigPage' component={InitialConfigPage} />
           <Route exact path='/clients' component={ClientsPage} />
           <Route exact path="/client/:clientId" render = {routerProps => this.renderClients(routerProps)} />
+          <Route exact path="/contract/:contractId" render = {routerProps => this.renderContracts(routerProps)} />
           <Route
             exact
             path='/signin'

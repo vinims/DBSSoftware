@@ -1,8 +1,8 @@
-import { ContractActionTypes } from './contract.types';
+import { InteractionActionTypes } from './interaction.types';
 
 export default function(state = {}, action) {
   switch (action.type) {
-      case ContractActionTypes.GET_CONTRACTS:
+      case InteractionActionTypes.GET_INTERACTIONS:
           return action.payload;
       default:
           return state;

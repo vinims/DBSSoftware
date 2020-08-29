@@ -12,7 +12,9 @@ class ClientProfile extends React.Component {
         super(props);
 
         this.state = {
-            clientData: {},
+            clientData: {
+                address: {}
+            },
         };
     }
 
@@ -30,8 +32,19 @@ class ClientProfile extends React.Component {
 
     render() {
         return (
-            <div>
-                <p>Name: {this.state.clientData.name}</p>
+            <div className="row">
+                <div className="col-sm-4 profile-img-wrap">
+                    <div className="profile-img">
+                        <img src={this.state.clientData.imageFile} />
+                    </div>
+                </div>
+                <div className="col-sm-8">
+                    <small>{this.state.clientData.id}</small>
+                    <h2>Name: {this.state.clientData.name}</h2>
+                    <p>{this.state.clientData.phone}</p>
+                    <p>{this.state.clientData.email}</p>
+                    <p>{this.state.clientData.address.completeAddress}</p>
+                </div>
             </div>
         );
     }

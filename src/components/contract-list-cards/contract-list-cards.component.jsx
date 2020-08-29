@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { getContracts , deleteContract } from '../../redux/contracts/contract.actions';
+import { getClient } from '../../redux/clients/client.actions';
+
 
 class ContractsListCards extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            client: {},
             columns: [
                 {
                     title: 'Image',
@@ -41,7 +44,12 @@ class ContractsListCards extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentWillMount = async () => {
+        this.props.getContracts()
+        const clientReturned = this.props.getClient(`${this.props.id}`)
+        await this.setState({
+            client: clientReturned
+        })
     }
 
     snapshotToArray(snapshot) {
@@ -86,11 +94,14 @@ class ContractsListCards extends React.Component {
     }
 
     render() {
-        return (            
-            <div>
-                teste
+       return _.map(this.props.contracts, (contract, key) => {    
+            return (     
+            <div key={key}> 
+                <h2>{contract.contractName}</h2>
+                <Link to={`/contract/${contract.id}`}>View</Link>
             </div>
         );
+    });
     }
 }
 
@@ -104,4 +115,4 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-export default connect(mapStateToProps, { getContracts , deleteContract })(ContractsListCards);
+export default connect(mapStateToProps, { getContracts , deleteContract , getClient })(ContractsListCards);
