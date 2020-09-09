@@ -7,18 +7,7 @@ import { getClients, saveClient, deleteClient } from '../../redux/clients/client
 import ClientForm from '../client-form/client-form.component';
 import ClientTable from '../client-table/client-table.component';
 
-import ReactModal from 'react-modal';
-
-const customStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
-    }
-  };
+import { Button , Modal } from 'react-bootstrap';
 
 class ClientsPageWrap extends React.Component {
     constructor(props) {
@@ -42,10 +31,12 @@ class ClientsPageWrap extends React.Component {
     }
 
     updateItem = async (id) => {
-        await this.setState({ idForUpdate: id } , () => {
-            this.handleOpenModal()
+
+        await this.setState({
+            idForUpdate: id
         })
-        
+        this.handleOpenModal()
+        console.log(this.state.idForUpdate)
     }
 
     renderClientForm() {
@@ -69,25 +60,31 @@ class ClientsPageWrap extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <div>
-                    {
-                        this.renderClientForm()
-                    }
-                    </div>
-                <button onClick={this.handleOpenModal}>Trigger Modal</button>
-                        {
-                            this.renderClientTable()
-                        }
+                    <Button variant="primary" onClick={this.handleOpenModal}>
+                        Launch static backdrop modal
+                    </Button>
+                    <ClientTable updateItem={this.updateItem} />
                 </div >
-                <ReactModal
-                    isOpen={this.state.showModal}
-                    contentLabel="Minimal Modal Example"
+
+                <Modal
+                    show={this.state.showModal}
+                    onHide={this.handleCloseModal}
+                    backdrop="static"
+                    keyboard={false}
                 >
-                    <button onClick={this.handleCloseModal}>Close Modal</button>
+                    <Modal.Body>
                     {
                         this.renderClientForm()
                     }
-                </ReactModal>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleCloseModal}>
+                            Close
+                    </Button>
+                        <Button variant="primary">Understood</Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         );
     }

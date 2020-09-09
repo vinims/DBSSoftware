@@ -26,6 +26,26 @@ export function getContract(id) {
   };     
 }
 
+export function getContractsByArrayOfIds(ids) {
+  return async dispatch => {
+    let data = [];
+  for (let i = 0; i < ids.length; i++) {
+    console.log(`${ids[i]}`)
+    let snapshot = await firestore.collection("contracts").doc(`${ids[i]}`).get()
+    console.log(snapshot)
+     let contractData = snapshot.data();
+     console.log(contractData)
+     data.push(contractData);
+    }
+              dispatch({
+                  type: ContractActionTypes.GET_CONTRACTBYARRAYOFIDS,
+                  payload: data
+              });
+              console.log(data)
+            return data;
+  };     
+}
+
 export const saveContract = (contract, additionalData) => {
   return dispatch => {
   if (!contract) return;

@@ -26,6 +26,26 @@ export function getInteraction(id) {
   };     
 }
 
+export function getInteractionsByArrayOfIds(ids) {
+  return async dispatch => {
+    let data = [];
+  for (let i = 0; i < ids.length; i++) {
+    console.log(`${ids[i]}`)
+    let snapshot = await firestore.collection("interactions").doc(`${ids[i]}`).get()
+    console.log(snapshot)
+     let interactionData = snapshot.data();
+     console.log(interactionData)
+     data.push(interactionData);
+    }
+              dispatch({
+                  type: InteractionActionTypes.GET_INTERACTIONBYARRAYOFIDS,
+                  payload: data
+              });
+              console.log(data)
+            return data;
+  };     
+}
+
 export const saveInteraction = (interaction, additionalData) => {
   return dispatch => {
   if (!interaction) return;

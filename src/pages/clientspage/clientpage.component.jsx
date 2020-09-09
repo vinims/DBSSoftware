@@ -12,7 +12,7 @@ const ClientPage = ({ client }) => {
         <ClientProfile clientId={client} />
       </div>
       <div className="col-12 client-childData-wrap">
-        <ContractsListCards />
+        <ContractsListCards clientId={client} />
       </div>
     </div>
   </div>)
